@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yard Eye"><meta name="theme-color" content="#B07800">
+<title>NEO Yard Eye</title><style>body{margin:0;background:#FFF8E6;color:#3A2A00;font-family:system-ui,sans-serif}#ld{padding:40px 20px;text-align:center}#ld button{font-size:17px;padding:12px 20px;border:0;border-radius:12px;background:#B07800;color:#fff}</style></head>
+<body><div id="ld">กำลังเปิด NEO Yard Eye…</div><script>
+var API="https://script.google.com/macros/s/AKfycbzIMHwVvB6EuAPBuFm5bpRVdRXYNwIR_kNivk7HiwVqlC5VV1tIONTIXwCtHtER2CD5nA/exec";
+function show(html){document.open();document.write(html);document.close();}
+function good(t){return typeof t==="string"&&t.indexOf("<!DOCTYPE html>")===0&&t.indexOf("NEO Yard Eye")>0&&t.length>20000;}
+function fetchLatest(){return fetch(API+"?api=index&_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text();}).then(function(t){if(!good(t))throw new Error("bad");try{localStorage.setItem("neo_html",t);}catch(e){}return t;});}
+function start(){var cached=null;try{cached=localStorage.getItem("neo_html");}catch(e){}
+if(good(cached)){fetchLatest().catch(function(){});show(cached);return;}
+fetchLatest().then(show).catch(function(e){document.getElementById("ld").innerHTML="เปิดแอปไม่ได้ — ตรวจอินเทอร์เน็ตแล้วลองใหม่<br><br><button id='rt'>ลองใหม่</button>";document.getElementById("rt").onclick=function(){location.reload();};});
+}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){setTimeout(start,0);});}else{setTimeout(start,0);}
+</script></body></html>
